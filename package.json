@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
+    "db-push": "npx prisma db push",
+    "studio": "npx prisma studio",
     "prisma-migrate": "npx prisma migrate dev",
     "seed": "node prisma/seed.js"
   },
@@ -14,7 +17,6 @@
     "prisma": "^5.3.1"
   },
   "dependencies": {
-    "@prisma/client": "^5.3.1",
-    "bcrypt": "^5.1.1"
+    "@prisma/client": "^5.3.1"
   }
 }
