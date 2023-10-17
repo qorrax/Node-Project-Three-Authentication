@@ -6,8 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
+    "server": "nodemon index.js",
     "db-push": "npx prisma db push",
     "studio": "npx prisma studio",
+    "generate": "npx prisma generate",
     "prisma-migrate": "npx prisma migrate dev",
     "seed": "node prisma/seed.js"
   },
