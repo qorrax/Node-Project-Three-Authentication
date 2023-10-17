@@ -1,120 +1,54 @@
 // Create endpoints for authors, make sure to use the middleware to authenticate the token
 
 
-import exoress  from  "express";
+import express from  "express";
 import prisma from  "./lib/index.js"
 
 
-const router  = exoress.Router();
+const router  = express.Router();
 
 
 router.get('/', async (req, res) => {
-    try {
-        
-        const authors = await prisma.author.findMany();
-        if(authors.length === 0) {
-            return res.status(404).json({status: 404, message: "Authores not found"});
-        }
 
-        res.json(authors)
+    res.send("hello from authors");
+})
 
-    } catch (error) {
-        res.status(500).json({status: 500, message: error.message})
-    }
-});
-
-router.get("/:id", async (req, res) => {
-    try {
-        
-        const { id } = req.params;
-
-        const author = await prisma.author.findUnique({
-            where: {
-                id: Number(id),
-            },
-        });
-
-        if(!author) {
-            return res.status(404).json({status: 404, message: "Author not found"})
-        }
-
-        res.json(author)
-
-    } catch (error) {
-        res.status(500).json({status: 500, message: error.message})
-    }
-});
-
-// router.post("/create_author", authenticate,  async (req, res) => {
 //     try {
         
-//         const {name} = req.body;
-
-//         const newAuthor = await prisma.author.create({
-//             data: {
-//                 name,
-//             },
-//         });
-
-//         if(!newAuthor) {
-//             return res.status(400).json({status: 400, message: "Author was not created!"})
+//         const authors = await prisma.author.findMany();
+//         if(authors.length === 0) {
+//             return res.status(404).json({status: 404, message: "Authores not found"});
 //         }
 
-//         res.status(200).json({status: 200, message: "Author successFully created!"})
+//         res.json(authors)
 
 //     } catch (error) {
 //         res.status(500).json({status: 500, message: error.message})
 //     }
 // });
 
-// router.put('/update_author/:id', authenticate, async (req, res) => {
+// router.get("/:id", async (req, res) => {
 //     try {
         
 //         const { id } = req.params;
-//         const {name} = req.body;
 
-//         const updateAuthor = await prisma.author.update({
+//         const author = await prisma.author.findUnique({
 //             where: {
 //                 id: Number(id),
 //             },
-            
-//             data: {
-//                 name,
-//             },
 //         });
 
-//         if(!updateAuthor) {
-//             return res.status(400).json({status: 400, message: "Author was not updated!"})
+//         if(!author) {
+//             return res.status(404).json({status: 404, message: "Author not found"})
 //         }
 
-//         res.status(200).json({status: 200, message: "Author successFully updated!"})
+//         res.json(author)
 
 //     } catch (error) {
 //         res.status(500).json({status: 500, message: error.message})
 //     }
 // });
 
-// router.delete('/delete_author/:id', authenticate, async (req, res) => {
-//     try {
-        
-//         const { id } = req.params;
-
-//         const deleteAuthor = await prisma.author.delete({
-//             where: {
-//                 id: Number(id),
-//             },
-//         });
-
-//         if(!deleteAuthor) {
-//             return res.status(400).json({status: 400, message: "Author was not deleted!"})
-//         }
-
-//         res.status(200).json({status: 200, message: `Author ${id} successFully deleted`})
-
-//     } catch (error) {
-//         res.status(500).json({status: 500, message: error.message})
-//     }
-// })
 
 export default router
 
