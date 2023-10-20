@@ -1,6 +1,7 @@
 // set up token middleware here
 
     import jwt   from 'jsonwebtoken';
+    import  "dotenv/config.js";
      const  SECRET_KEY =  process.env.SECRET_KEY;
 
     function authenticate(req, res, next) {
