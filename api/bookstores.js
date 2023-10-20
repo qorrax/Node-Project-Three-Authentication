@@ -2,7 +2,7 @@
 
 import express from 'express';
 import prisma from './lib/index.js';
-// import authenticate from './middleware/authenticate.js';
+import authenticate from './middleware/authenticate.js';
 
 const router = express.Router();
 
@@ -43,79 +43,83 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// router.post('/create_bookStore', authenticate, async (req, res) => {
-//     try {
+   // create a new bookstore
+
+router.post('/', authenticate, async (req, res) => {
+    try {
         
-//         const {ownerId, name, location} = req.body;
+        const bookstore = await prisma.bookStore.create({
 
-//         const newBookStore = await prisma.bookStore.create({
-//             data: {
-//                 ownerId,
-//                 name, 
-//                 location,
-//             },
-//         });
+            data: req.body,
+        });
 
-//         if(!newBookStore) {
-//             return res.status(400).json({status: 400, message: "BookStore was not created!"})
-//         }
-
-//         res.status(200).json({status: 200, message: "BookStore successFully created!"})
-
-//     } catch (error) {
-//         res.status(500).json({status: 500, message: error.message})
-//     }
-// });
-
-// router.put('/update_bookStore/:id', authenticate, async (req, res) => {
-//     try {
         
-//         const {id} = req.params;
-//         const {ownerId, name, location} = req.body;
 
-//         const updateBookStore = await prisma.bookStore.update({
-//             where: {
-//                 id: Number(id),
-//             },
+        if(bookstore) {
+            res.status(201).json(bookstore)
+        } else {
 
-//             data: {
-//                 ownerId,
-//                 name,
-//                 location,
-//             }
-//         });
+            res.status(400).json({status: 400, message: "BookStore was not created!"})
+        }
 
-//         if(!updateBookStore) {
-//             return res.status(400).json({status: 400, message: "BookStore was not updated!"})
-//         }
+        res.status(200).json({status: 200, message: "BookStore successFully created!"})
 
-//         res.status(200).json({status: 200, message: "BookStore successFully updated!"})
+     } catch (error) {
+        res.status(500).json({status: 500, message: error.message})
+    }
+});
 
-//     } catch (error) {
-//         res.status(500).json({status: 500, message: error.message})
-//     }
-// })
 
-// router.delete('/delete_bookStore/:id', authenticate, async (req, res) => {
-//     try {
+
+router.put('/update_bookStore/:id', authenticate, async (req, res) => {
+    try {
         
-//         const {id} = req.params;
+        const {id} = req.params;
+        const {ownerId, name, location} = req.body;
 
-//         const deleteBookStore = await prisma.bookStore.delete({
-//             where: {
-//                 id: Number(id),
-//             },
-//         });
+        const updateBookStore = await prisma.bookStore.update({
+            where: {
+                id: Number(id),
+            },
 
-//         if(!deleteBookStore) {
-//             return res.status(400).json({status: 400, message: "BookStore was not created!"})
-//         }
+            data: {
+                ownerId,
+                name,
+                location,
+            }
+        });
 
-//         res.status(200).json({status: 200, message: `BookStore ${id} successFully deleted!`})
+        if(!updateBookStore) {
+            return res.status(400).json({status: 400, message: "BookStore was not updated!"})
+        }
 
-//     } catch (error) {
-//         res.status(500).json({status: 500, message: error.message})
-//     }
-// });
+        res.status(200).json({status: 200, message: "BookStore successFully updated!"})
+
+    } catch (error) {
+        res.status(500).json({status: 500, message: error.message})
+    }
+})
+
+router.delete('/delete_bookStore/:id', authenticate, async (req, res) => {
+    try {
+        
+        const {id} = req.params;
+
+        const deleteBookStore = await prisma.bookStore.delete({
+            where: {
+                id: Number(id),
+            },
+        });
+
+        if(!deleteBookStore) {
+            return res.status(400).json({status: 400, message: "BookStore was not created!"})
+        }
+
+        res.status(200).json({status: 200, message: `BookStore ${id} successFully deleted!`})
+
+    } catch (error) {
+        res.status(500).json({status: 500, message: error.message})
+    }
+});
 
 export default router
