@@ -1,4 +1,6 @@
-// Create endpoints for bookstores, make sure to use the middleware to authenticate the token
+
+
+
 
 import express from 'express';
 import prisma from './lib/index.js';
@@ -43,33 +45,29 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-   // create a new bookstore
-
-router.post('/', authenticate, async (req, res) => {
+router.post('/create_bookStore', authenticate, async (req, res) => {
     try {
         
-        const bookstore = await prisma.bookStore.create({
+        const {ownerId, name, location} = req.body;
 
-            data: req.body,
+        const newBookStore = await prisma.bookStore.create({
+            data: {
+                ownerId,
+                name, 
+                location,
+            },
         });
 
-        
-
-        if(bookstore) {
-            res.status(201).json(bookstore)
-        } else {
-
-            res.status(400).json({status: 400, message: "BookStore was not created!"})
+        if(!newBookStore) {
+            return res.status(400).json({status: 400, message: "BookStore was not created!"})
         }
 
         res.status(200).json({status: 200, message: "BookStore successFully created!"})
 
-     } catch (error) {
+    } catch (error) {
         res.status(500).json({status: 500, message: error.message})
     }
 });
-
-
 
 router.put('/update_bookStore/:id', authenticate, async (req, res) => {
     try {

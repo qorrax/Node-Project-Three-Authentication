@@ -4,8 +4,8 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import prisma from './lib/index.js';
 import jwt from 'jsonwebtoken';
-import 'dotenv/config.js';
-const SECRET_KEY = "secretkey123456";
+import { config } from 'dotenv';
+const SECRET_KEY = "secret";
 
 const router = express.Router();
 

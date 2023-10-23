@@ -47,6 +47,33 @@ router.get("/:id", async (req, res) => {
     }
 });
 
+  // create a new author
+
+router.post("/create_author", async (req, res) => {
+    try {
+        
+        const { name} = req.body;
+
+        const newAuthor = await prisma.author.create({
+            data: {
+                name,
+                
+            },
+        });
+
+        res.json(newAuthor)
+
+
+
+
+    } catch (error) {
+        res.status(500).json({status: 500, message: error.message})
+    }
+
+
+    
+}
+);
 
 export default router
 
