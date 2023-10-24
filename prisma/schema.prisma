@@ -36,6 +36,9 @@ model BookStore {
 
   book  Book[]
   Owner Owner  @relation(fields: [ownerId], references: [id])
+
+
+  @@index([ownerId], name: "ownerId")
 }
 
 model Author {
@@ -58,6 +61,10 @@ model Book {
 
   author    Author    @relation(fields: [authorId], references: [id])
   bookstore BookStore @relation(fields: [bookstoreId], references: [id])
+
+
+  @@index([authorId], name: "authorId")
+  @@index([bookstoreId], name: "bookstoreId")
 }
 
 // Create owner model here
