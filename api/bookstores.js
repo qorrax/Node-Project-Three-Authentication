@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
         
         const bookStores = await prisma.bookStore.findMany();
         if(bookStores.length === 0) {
-            return res.status(404).json({status: 404, message: "BookStores not found"})
+            return res.status(404).json({status: 404, message: "wax maktabad ah  lama helin"})
         }
 
         res.json(bookStores);

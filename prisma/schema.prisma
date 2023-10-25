@@ -6,10 +6,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
+
+  datasource db {
+
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   relationMode = "prisma"
+
 }
 
 
@@ -38,7 +41,7 @@ model BookStore {
   Owner Owner  @relation(fields: [ownerId], references: [id])
 
 
-  @@index([ownerId], name: "ownerId")
+ 
 }
 
 model Author {
@@ -63,8 +66,7 @@ model Book {
   bookstore BookStore @relation(fields: [bookstoreId], references: [id])
 
 
-  @@index([authorId], name: "authorId")
-  @@index([bookstoreId], name: "bookstoreId")
+
 }
 
 // Create owner model here
